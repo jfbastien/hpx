@@ -8,8 +8,7 @@
 
 #include <hpx/include/parallel_algorithm.hpp>
 #include <hpx/include/parallel_numeric.hpp>
-
-#include <boost/range/irange.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <algorithm>
 #include <cstdint>
@@ -68,7 +67,7 @@ int hpx_main(boost::program_options::variables_map& vm)
     const std::uint64_t start = 0;
 
     // Fill the original matrix, set transpose to known garbage value.
-    auto range = boost::irange(start, num_blocks);
+    auto range = hpx::util::make_iota_range(start, num_blocks);
     for_each(par, std::begin(range), std::end(range),
         [&](std::uint64_t b)
         {
@@ -94,7 +93,7 @@ int hpx_main(boost::program_options::variables_map& vm)
     {
         hpx::util::high_resolution_timer t;
 
-        auto range = boost::irange(start, num_blocks);
+        auto range = hpx::util::make_iota_range(start, num_blocks);
 
         std::vector<hpx::shared_future<void> > transpose_futures;
         transpose_futures.resize(num_blocks);
@@ -228,7 +227,7 @@ double test_results(std::uint64_t order, std::uint64_t block_order,
     const std::uint64_t end = trans.size();
 
     // Fill the original matrix, set transpose to known garbage value.
-    auto range = boost::irange(start, end);
+    auto range = hpx::util::make_iota_range(start, end);
     double errsq =
         transform_reduce(par, std::begin(range), std::end(range), 0.0,
             [](double lhs, double rhs) { return lhs + rhs; },

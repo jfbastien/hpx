@@ -10,9 +10,9 @@
 #include <hpx/include/iostreams.hpp>
 #include <hpx/include/serialization.hpp>
 #include <hpx/include/parallel_for_each.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <boost/scoped_array.hpp>
-#include <boost/range/irange.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -86,7 +86,7 @@ double receive_double(
 
         std::size_t const start = 0;
 
-        auto range = boost::irange(start, window_size);
+        auto range = hpx::util::make_iota_range(start, window_size);
         for_each(par, std::begin(range), std::end(range),
             [&](std::uint64_t j)
             {
@@ -124,7 +124,7 @@ double receive(
 
         std::size_t const start = 0;
 
-        auto range = boost::irange(start, window_size);
+        auto range = hpx::util::make_iota_range(start, window_size);
         for_each(par, std::begin(range), std::end(range),
             [&](std::uint64_t j)
             {

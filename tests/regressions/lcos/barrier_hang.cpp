@@ -10,13 +10,13 @@
 #include <hpx/parallel/execution.hpp>
 #include <hpx/parallel/execution_policy.hpp>
 #include <hpx/util/lightweight_test.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <cstddef>
 #include <string>
 #include <vector>
 
 #include <boost/atomic.hpp>
-#include <boost/range/irange.hpp>
 
 boost::atomic<std::size_t> local_count;
 
@@ -49,7 +49,7 @@ std::size_t bulk_test(
     hpx::parallel::execution::bulk_sync_execute(
         hpx::parallel::execution::par.executor(),
         spmd_block_helper{name, num_images},
-        boost::irange(offset, offset + images_per_locality));
+        hpx::util::make_iota_range(offset, offset + images_per_locality));
 
     return local_count.load();
 }

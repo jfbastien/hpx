@@ -22,10 +22,9 @@
 #include <hpx/runtime/threads/topology.hpp>
 #include <hpx/util/functional/new.hpp>
 #include <hpx/util/invoke_fused.hpp>
+#include <hpx/util/iota_range.hpp>
 #include <hpx/util/range.hpp>
 #include <hpx/util/tuple.hpp>
-
-#include <boost/range/irange.hpp>
 
 #include <cstddef>
 #include <limits>
@@ -162,7 +161,7 @@ namespace hpx { namespace compute { namespace host
         template <typename U, typename ... Args>
         void bulk_construct(U* p, std::size_t count, Args &&... args)
         {
-            auto irange = boost::irange(std::size_t(0), count);
+            auto irange = util::make_iota_range(std::size_t(0), count);
             auto policy =
                 hpx::parallel::execution::parallel_policy()
                     .on(executor_)
@@ -237,7 +236,7 @@ namespace hpx { namespace compute { namespace host
         void bulk_destroy(U* p, std::size_t count)
         {
             // keep memory locality, use executor...
-            auto irange = boost::irange(std::size_t(0), count);
+            auto irange = util::make_iota_range(std::size_t(0), count);
             hpx::parallel::for_each(
                 hpx::parallel::execution::par
                     .on(executor_)

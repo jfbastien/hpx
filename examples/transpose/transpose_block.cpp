@@ -8,8 +8,7 @@
 
 #include <hpx/include/parallel_algorithm.hpp>
 #include <hpx/include/parallel_numeric.hpp>
-
-#include <boost/range/irange.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <algorithm>
 #include <cstddef>
@@ -246,7 +245,7 @@ int hpx_main(boost::program_options::variables_map& vm)
         using hpx::parallel::execution::par;
 
         // Fill the original matrix, set transpose to known garbage value.
-        auto range = boost::irange(blocks_start, blocks_end);
+        auto range = hpx::util::make_iota_range(blocks_start, blocks_end);
         for_each(par, std::begin(range), std::end(range),
             [&](std::uint64_t b)
             {
@@ -292,7 +291,7 @@ int hpx_main(boost::program_options::variables_map& vm)
         {
             hpx::util::high_resolution_timer t;
 
-            auto range = boost::irange(blocks_start, blocks_end);
+            auto range = hpx::util::make_iota_range(blocks_start, blocks_end);
 
             std::vector<hpx::future<void> > block_futures;
             block_futures.resize(num_local_blocks);
@@ -303,7 +302,7 @@ int hpx_main(boost::program_options::variables_map& vm)
                     std::vector<hpx::future<void> > phase_futures;
                     phase_futures.reserve(num_blocks);
 
-                    auto phase_range = boost::irange(
+                    auto phase_range = hpx::util::make_iota_range(
                         static_cast<std::uint64_t>(0), num_blocks);
                     for(std::uint64_t phase: phase_range)
                     {
@@ -449,7 +448,7 @@ double test_results(std::uint64_t order, std::uint64_t block_order,
     using hpx::parallel::execution::par;
 
     // Fill the original matrix, set transpose to known garbage value.
-    auto range = boost::irange(blocks_start, blocks_end);
+    auto range = hpx::util::make_iota_range(blocks_start, blocks_end);
     double errsq =
         transform_reduce(par, std::begin(range), std::end(range), 0.0,
             [](double lhs, double rhs) { return lhs + rhs; },

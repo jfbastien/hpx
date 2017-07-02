@@ -7,6 +7,7 @@
 #include <hpx/hpx.hpp>
 #include <hpx/traits/is_iterator.hpp>
 #include <hpx/util/high_resolution_clock.hpp>
+#include <hpx/util/iota_range.hpp>
 #include <hpx/util/transform_iterator.hpp>
 #include <hpx/include/iostreams.hpp>
 
@@ -17,8 +18,6 @@
 #include <type_traits>
 #include <utility>
 #include <vector>
-
-#include <boost/range/irange.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 int test_count = 100;
@@ -497,7 +496,7 @@ std::uint64_t bench_stencil3_iterator_explicit()
     // handle all elements explicitly
     int result = values.back() + values.front() + values[1];
 
-    auto range = boost::irange(0, partition_size);
+    auto range = hpx::util::make_iota_range(0, partition_size);
 
     std::for_each(std::begin(range), std::end(range),
         [&result, &values](std::size_t i)

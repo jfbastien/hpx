@@ -11,8 +11,7 @@
 #include <hpx/parallel/execution_policy.hpp>
 #include <hpx/traits/is_execution_policy.hpp>
 #include <hpx/util/first_argument.hpp>
-
-#include <boost/range/irange.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <cstddef>
 #include <functional>
@@ -123,7 +122,7 @@ namespace hpx { namespace lcos { namespace local
                     detail::spmd_block_helper<F>{
                         barrier, std::forward<F>(f), num_images
                     },
-                    boost::irange(std::size_t(0), num_images),
+                    util::make_iota_range(std::size_t(0), num_images),
                         std::forward<Args>(args)...);
     }
 
@@ -162,7 +161,7 @@ namespace hpx { namespace lcos { namespace local
                 detail::spmd_block_helper<F>{
                     barrier, std::forward<F>(f), num_images
                 },
-                boost::irange(std::size_t(0), num_images),
+                util::make_iota_range(std::size_t(0), num_images),
                     std::forward<Args>(args)...);
     }
 

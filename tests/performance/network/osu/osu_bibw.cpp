@@ -10,8 +10,7 @@
 #include <hpx/include/iostreams.hpp>
 #include <hpx/include/serialization.hpp>
 #include <hpx/include/parallel_for_each.hpp>
-
-#include <boost/range/irange.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <cstddef>
 #include <cstdint>
@@ -50,7 +49,7 @@ send_async(hpx::naming::id_type dest, std::size_t size, std::size_t window_size)
 
     std::size_t const start = 0;
 
-    auto range = boost::irange(start, window_size);
+    auto range = hpx::util::make_iota_range(start, window_size);
     return for_each(
         par(task), std::begin(range), std::end(range),
         [=](std::uint64_t j)
@@ -82,7 +81,7 @@ recv_async(hpx::naming::id_type dest, std::size_t size, std::size_t window_size)
 
     std::size_t const start = 0;
 
-    auto range = boost::irange(start, window_size);
+    auto range = hpx::util::make_iota_range(start, window_size);
     return for_each(
         par(task), std::begin(range), std::end(range),
         [=](std::uint64_t j)

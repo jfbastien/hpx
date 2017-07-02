@@ -11,8 +11,7 @@
 #include <hpx/include/serialization.hpp>
 #include <hpx/include/parallel_for_each.hpp>
 #include <hpx/include/util.hpp>
-
-#include <boost/range/irange.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <algorithm>
 #include <cstddef>
@@ -92,7 +91,7 @@ double ireceive(hpx::naming::id_type dest, std::size_t size, std::size_t window_
 
         std::size_t const start = 0;
 
-        auto range = boost::irange(start, window_size);
+        auto range = hpx::util::make_iota_range(start, window_size);
         for_each(par, std::begin(range), std::end(range),
             [&](std::uint64_t j)
             {

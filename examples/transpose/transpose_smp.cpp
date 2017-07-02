@@ -8,8 +8,7 @@
 
 #include <hpx/include/parallel_algorithm.hpp>
 #include <hpx/include/parallel_numeric.hpp>
-
-#include <boost/range/irange.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <algorithm>
 #include <cstdint>
@@ -57,7 +56,7 @@ int hpx_main(boost::program_options::variables_map& vm)
     const std::uint64_t start = 0;
 
     // Fill the original matrix, set transpose to known garbage value.
-    auto range = boost::irange(start, order);
+    auto range = hpx::util::make_iota_range(start, order);
     // parallel for
     for_each(par, std::begin(range), std::end(range),
         [&](std::uint64_t i)
@@ -80,7 +79,7 @@ int hpx_main(boost::program_options::variables_map& vm)
         hpx::util::high_resolution_timer t;
         if(tile_size < order)
         {
-            auto range = boost::irange(start, order+tile_size, tile_size);
+            auto range = hpx::util::make_iota_range(start, order+tile_size, tile_size);
             // parallel for
             for_each(par, std::begin(range), std::end(range),
                 [&](std::uint64_t i)
@@ -103,7 +102,7 @@ int hpx_main(boost::program_options::variables_map& vm)
         }
         else
         {
-            auto range = boost::irange(start, order);
+            auto range = hpx::util::make_iota_range(start, order);
             // parallel for
             for_each(par, std::begin(range), std::end(range),
                 [&](std::uint64_t i)
@@ -183,7 +182,7 @@ double test_results(std::uint64_t order, std::vector<double> const & trans)
 
     const std::uint64_t start = 0;
 
-    auto range = boost::irange(start, order);
+    auto range = hpx::util::make_iota_range(start, order);
     // parallel reduce
     double errsq =
         transform_reduce(par, std::begin(range), std::end(range), 0.0,

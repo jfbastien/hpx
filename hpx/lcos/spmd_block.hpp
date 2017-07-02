@@ -17,8 +17,7 @@
 #include <hpx/traits/concepts.hpp>
 #include <hpx/traits/is_action.hpp>
 #include <hpx/util/first_argument.hpp>
-
-#include <boost/range/irange.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <cstddef>
 #include <functional>
@@ -152,7 +151,7 @@ namespace hpx { namespace lcos
                         exec,
                         detail::spmd_block_helper<F>{
                             name,images_per_locality, num_images},
-                        boost::irange(
+                        util::make_iota_range(
                             offset, offset + images_per_locality),
                         args...);
             }

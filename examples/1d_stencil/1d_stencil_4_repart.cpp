@@ -20,8 +20,8 @@
 
 #include <hpx/include/parallel_algorithm.hpp>
 #include <hpx/include/performance_counters.hpp>
+#include <hpx/util/iota_range.hpp>
 
-#include <boost/range/irange.hpp>
 #include <boost/format.hpp>
 
 #include <algorithm>
@@ -229,7 +229,7 @@ struct stepper
         if (!data) {
             // Initial conditions: f(0, i) = i
             std::size_t b = 0;
-            auto range = boost::irange(b, np);
+            auto range = hpx::util::make_iota_range(b, np);
             using hpx::parallel::execution::par;
             hpx::parallel::for_each(
                 par, std::begin(range), std::end(range),
@@ -243,7 +243,7 @@ struct stepper
         else {
             // Initialize from existing data
             std::size_t b = 0;
-            auto range = boost::irange(b, np);
+            auto range = hpx::util::make_iota_range(b, np);
             using hpx::parallel::execution::par;
             hpx::parallel::for_each(
                 par, std::begin(range), std::end(range),

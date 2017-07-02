@@ -18,12 +18,12 @@
 #include <hpx/hpx.hpp>
 
 #include <hpx/include/parallel_algorithm.hpp>
-#include <boost/range/irange.hpp>
 
 #include "print_time_results.hpp"
 #include <hpx/include/performance_counters.hpp>
 #include <hpx/include/actions.hpp>
 #include <hpx/include/util.hpp>
+#include <hpx/util/iota_range.hpp>
 
 #include <boost/format.hpp>
 
@@ -211,7 +211,7 @@ struct stepper
 
         // Initial conditions: f(0, i) = i
         std::size_t b = 0;
-        auto range = boost::irange(b, np);
+        auto range = hpx::util::make_iota_range(b, np);
         using hpx::parallel::execution::par;
         hpx::parallel::for_each(par, std::begin(range), std::end(range),
             [&U, nx](std::size_t i)
