@@ -30,10 +30,10 @@
 #include <hpx/util/thread_specific_ptr.hpp>
 #include <hpx/util/unlock_guard.hpp>
 
-#include <boost/atomic.hpp>
 #include <boost/system/system_error.hpp>
 
 #include <algorithm>
+#include <atomic>
 #include <cstddef>
 #include <cstdint>
 #include <exception>
@@ -524,7 +524,7 @@ namespace hpx { namespace threads { namespace detail
     ///////////////////////////////////////////////////////////////////////////
     struct manage_active_thread_count
     {
-        manage_active_thread_count(boost::atomic<long>& counter)
+        manage_active_thread_count(std::atomic<long>& counter)
           : counter_(counter)
         {
             ++counter_;
@@ -534,7 +534,7 @@ namespace hpx { namespace threads { namespace detail
             --counter_;
         }
 
-        boost::atomic<long>& counter_;
+        std::atomic<long>& counter_;
     };
 
     template <typename Scheduler>

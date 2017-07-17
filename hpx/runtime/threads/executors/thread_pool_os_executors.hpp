@@ -16,8 +16,7 @@
 #include <hpx/util/thread_description.hpp>
 #include <hpx/util/unique_function.hpp>
 
-#include <boost/atomic.hpp>
-
+#include <atomic>
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
@@ -100,7 +99,7 @@ namespace hpx { namespace threads { namespace executors
 
             std::size_t num_threads_;
 
-            static boost::atomic<std::size_t> os_executor_count_;
+            static std::atomic<std::size_t> os_executor_count_;
             static std::string get_unique_name();
 
             // protect scheduler initialization

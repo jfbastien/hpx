@@ -9,14 +9,13 @@
 #include <hpx/util/lightweight_test.hpp>
 #include <hpx/util/unwrap.hpp>
 
-#include <boost/atomic.hpp>
-
+#include <atomic>
 #include <cstdint>
 #include <string>
 #include <vector>
 
 ///////////////////////////////////////////////////////////////////////////////
-boost::atomic<std::uint32_t> void_f_count;
+std::atomic<std::uint32_t> void_f_count;
 
 void void_f(hpx::future<int> &&) { ++void_f_count; }
 HPX_PLAIN_ACTION(void_f);

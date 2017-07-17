@@ -21,9 +21,9 @@
 #include <hpx/util/steady_clock.hpp>
 #include <hpx/util_fwd.hpp>
 
-#include <boost/atomic.hpp>
 #include <boost/scoped_ptr.hpp>
 
+#include <atomic>
 #include <cstddef>
 #include <cstdint>
 #include <exception>
@@ -189,7 +189,7 @@ namespace hpx { namespace threads { namespace detail
         // count number of executed HPX-threads and thread phases (invocations)
         std::vector<std::int64_t> executed_threads_;
         std::vector<std::int64_t> executed_thread_phases_;
-        boost::atomic<long> thread_count_;
+        std::atomic<long> thread_count_;
 
         double timestamp_scale_;    // scale timestamps to nanoseconds
 

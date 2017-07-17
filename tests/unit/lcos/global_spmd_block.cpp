@@ -8,15 +8,14 @@
 #include <hpx/lcos/spmd_block.hpp>
 #include <hpx/util/lightweight_test.hpp>
 
-#include <boost/atomic.hpp>
-
+#include <atomic>
 #include <cstddef>
 #include <utility>
 
 std::size_t images_per_locality = 4;
 std::size_t iterations = 20;
 std::size_t test_value = 4;
-boost::atomic<std::size_t> c(0);
+std::atomic<std::size_t> c(0);
 
 void bulk_test_function(hpx::lcos::spmd_block block, std::size_t arg)
 {
